@@ -7,20 +7,6 @@ function updateURL(filters) {
   history.replaceState(null, '', url);
 }
 
-function safeUrl(value, isInternal = false) {
-  try {
-    const parsed = new URL(value, window.location.origin);
-    if (isInternal) {
-      if (parsed.origin !== window.location.origin) return null;
-      return parsed.pathname + parsed.search + parsed.hash;
-    }
-    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') return parsed.href;
-  } catch (_) {
-    return null;
-  }
-  return null;
-}
-
 export function initTalksCatalog() {
   const root = document.querySelector('[data-talks-catalog]');
   const payloadNode = document.getElementById('talk-data');
@@ -71,7 +57,8 @@ export function initTalksCatalog() {
       clone.querySelector('[data-field="summary"]').textContent = talk.summary || 'No summary available.';
       clone.querySelector('[data-field="event"]').textContent = talk.event;
       clone.querySelector('[data-field="eventYear"]').textContent = talk.eventYear || '—';
-      const safeTalkLink = safeUrl(talk.link, true);
+      const safeSlug = typeof talk.slug === 'string' && /^[a-z0-9-]+$/.test(talk.slug) ? talk.slug : null;
+      const safeTalkLink = safeSlug ? `/talks/${encodeURIComponent(safeSlug)}/` : null;
       if (safeTalkLink) {
         clone.querySelector('[data-field="link"]').href = safeTalkLink;
         clone.querySelector('[data-field="linkSecondary"]').href = safeTalkLink;
@@ -79,10 +66,6 @@ export function initTalksCatalog() {
         clone.querySelector('[data-field="link"]').removeAttribute('href');
         clone.querySelector('[data-field="linkSecondary"]').removeAttribute('href');
       }
-      const slides = clone.querySelector('[data-field="slides"]');
-      const safeSlidesUrl = safeUrl(talk.slidesURL);
-      if (safeSlidesUrl) slides.href = safeSlidesUrl;
-      else slides.remove();
       results.append(clone);
     });
 

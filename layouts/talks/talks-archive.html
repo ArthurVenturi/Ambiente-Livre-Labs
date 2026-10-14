@@ -39,7 +39,6 @@
     </ul>
     <div class="link-row">
       <a data-field="linkSecondary" href="#">Talk page</a>
-      <a data-field="slides" href="#">Slides</a>
     </div>
   </article>
 </template>
@@ -53,8 +52,7 @@
       "event": {{ $talk.Params.event | default "" | jsonify }},
       "eventSlug": {{ $talk.Params.eventSlug | default "" | jsonify }},
       "eventYear": {{ $talk.Params.eventYear | default "" | jsonify }},
-      "link": {{ $talk.RelPermalink | jsonify }},
-      "slidesURL": {{ $talk.Params.slidesURL | default "" | jsonify }}
+      "slug": {{ $talk.File.ContentBaseName | jsonify }}
     }
   {{- end -}}
 ]</script>

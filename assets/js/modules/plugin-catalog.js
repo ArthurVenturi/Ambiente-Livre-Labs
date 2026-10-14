@@ -8,6 +8,16 @@ function bySort(sort) {
   return (a, b) => a.name.localeCompare(b.name);
 }
 
+function safeExternalUrl(value) {
+  try {
+    const parsed = new URL(value, window.location.origin);
+    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') return parsed.href;
+  } catch (_) {
+    return null;
+  }
+  return null;
+}
+
 function updateURL(filters) {
   const url = new URL(window.location.href);
   Object.entries(filters).forEach(([key, value]) => {
@@ -69,7 +79,12 @@ export function initPluginCatalog() {
       clone.querySelector('[data-field="categories"]').textContent = (plugin.categories || []).map(toTitle).join(', ');
       clone.querySelector('[data-field="language"]').textContent = plugin.language || 'Unknown';
       clone.querySelector('[data-field="stars"]').textContent = String(plugin.stargazersCount ?? 0);
-      clone.querySelector('[data-field="repoLink"]').href = plugin.htmlUrl;
+      const safeRepoUrl = safeExternalUrl(plugin.htmlUrl);
+      if (safeRepoUrl) {
+        clone.querySelector('[data-field="repoLink"]').href = safeRepoUrl;
+      } else {
+        clone.querySelector('[data-field="repoLink"]').remove();
+      }
       const detailsPath = `/plugins/${plugin.slug}/`;
       clone.querySelector('[data-field="detailsLink"]').href = detailsPath;
       clone.querySelector('[data-field="detailsLinkSecondary"]').href = detailsPath;

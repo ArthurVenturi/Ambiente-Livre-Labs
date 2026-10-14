@@ -1,0 +1,61 @@
+{{ define "main" }}
+{{ $talks := where .Site.RegularPages "Section" "talks" }}
+<section class="page-header">
+  <h1>{{ .Title }}</h1>
+  <p>{{ .Description }}</p>
+</section>
+<section class="filters" data-talks-catalog>
+  <label>
+    Search
+    <input type="search" data-filter="search" placeholder="Title or summary">
+  </label>
+  <label>
+    Event
+    <select data-filter="event">
+      <option value="">All</option>
+      {{ range (sort (.Site.GetPage "/talks/events").Pages "Title") }}
+        <option value="{{ .Params.eventSlug }}">{{ .Title }}</option>
+      {{ end }}
+    </select>
+  </label>
+  <label>
+    Year
+    <select data-filter="year">
+      <option value="">All</option>
+    </select>
+  </label>
+  <button type="button" class="button secondary" data-action="reset">Reset filters</button>
+</section>
+
+<p class="result-count" data-result-count aria-live="polite"></p>
+<div class="cards-grid" data-results></div>
+<template data-result-template>
+  <article class="card reveal">
+    <h2><a data-field="link" href="#"><span data-field="title"></span></a></h2>
+    <p data-field="summary"></p>
+    <ul class="meta-list">
+      <li><strong>Event:</strong> <span data-field="event"></span></li>
+      <li><strong>Year:</strong> <span data-field="eventYear"></span></li>
+    </ul>
+    <div class="link-row">
+      <a data-field="linkSecondary" href="#">Talk page</a>
+      <a data-field="slides" href="#">Slides</a>
+    </div>
+  </article>
+</template>
+<p class="empty-state" data-empty hidden>No talks match the current filters.</p>
+<script type="application/json" id="talk-data">[
+  {{- range $index, $talk := (sort $talks "Date" "desc") -}}
+    {{- if gt $index 0 }},{{ end -}}
+    {
+      "title": {{ $talk.Title | jsonify }},
+      "summary": {{ $talk.Params.summary | default "" | jsonify }},
+      "event": {{ $talk.Params.event | default "" | jsonify }},
+      "eventSlug": {{ $talk.Params.eventSlug | default "" | jsonify }},
+      "eventYear": {{ $talk.Params.eventYear | default "" | jsonify }},
+      "link": {{ $talk.RelPermalink | jsonify }},
+      "slidesURL": {{ $talk.Params.slidesURL | default "" | jsonify }}
+    }
+  {{- end -}}
+]</script>
+{{ end }}

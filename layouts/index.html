@@ -1,0 +1,69 @@
+{{ define "main" }}
+{{ $pluginData := index .Site.Data "plugins-generated" }}
+{{ $softwareCatalog := index .Site.Data "software-categories" }}
+{{ $plugins := sort $pluginData.items "name" }}
+{{ $featuredPlugins := where $plugins "featured" true }}
+{{ $talks := where .Site.RegularPages "Section" "talks" }}
+{{ $featuredTalks := first 4 (sort (where $talks "Params.featured" true) "Date" "desc") }}
+<section class="hero">
+  <div>
+    <p class="kicker">Ambiente Livre Labs</p>
+    <h1>Plugin catalog and technical talks hub.</h1>
+    <p>Discover verified open-source integrations and conference sessions curated by Ambiente Livre Labs.</p>
+    <div class="cta-row">
+      <a class="button" href="{{ "/plugins/" | relURL }}">Explore plugins</a>
+      <a class="button secondary" href="{{ "/talks/" | relURL }}">Browse talks</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <noscript><p class="canvas-fallback">Motion disabled: interactive hero visualization requires JavaScript.</p></noscript>
+  </div>
+</section>
+
+<section>
+  <h2>Plugin ecosystems</h2>
+  <div class="cards-grid compact">
+    {{ range $key, $meta := $softwareCatalog.software }}
+      {{ $count := len (where $plugins "software" $key) }}
+      <article class="card">
+        <h3><a href="{{ printf "/plugins/software/%s/" $key | relURL }}">{{ $meta.title }}</a></h3>
+        <p>{{ $meta.description }}</p>
+        <p class="muted">{{ $count }} plugin{{ if ne $count 1 }}s{{ end }}</p>
+      </article>
+    {{ end }}
+  </div>
+</section>
+
+<section>
+  <h2>Featured plugins</h2>
+  <div class="cards-grid">
+    {{ range first 4 $featuredPlugins }}
+      {{ partial "plugin-card.html" . }}
+    {{ else }}
+      <p>No featured plugins configured yet.</p>
+    {{ end }}
+  </div>
+</section>
+
+<section>
+  <h2>Explore by category</h2>
+  <div class="tags-wrap">
+    {{ range $key, $meta := $softwareCatalog.categories }}
+      <a class="tag" href="{{ printf "/plugins/categories/%s/" $key | relURL }}">{{ $meta.title }}</a>
+    {{ end }}
+  </div>
+</section>
+
+<section>
+  <h2>Talks and events</h2>
+  <div class="cards-grid">
+    {{ range $featuredTalks }}
+      {{ partial "talk-card.html" . }}
+    {{ else }}
+      <p>No featured talks available yet.</p>
+    {{ end }}
+  </div>
+  <p><a href="{{ "/talks/events/" | relURL }}">View all events, including TDC and pgConf</a></p>
+</section>
+{{ end }}

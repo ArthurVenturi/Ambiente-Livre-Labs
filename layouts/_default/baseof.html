@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  <meta property="og:title" content="{{ .Title }}">
+  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ .Permalink }}">
+  {{ $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="{{ "/" | relURL }}" aria-label="Ambiente Livre Labs homepage">
+        <img src="https://github.com/user-attachments/assets/2d206699-270a-4944-942c-e434b1c56323" alt="Ambiente Livre Labs" width="200" height="120" loading="eager">
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <a href="{{ "/plugins/" | relURL }}">Plugins</a>
+        <a href="{{ "/talks/" | relURL }}">Talks</a>
+        <a href="{{ "/talks/events/" | relURL }}">Events</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="container">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <p class="footer-brand">Ambiente Livre Labs</p>
+        <p>Open Software For Business</p>
+      </div>
+      <nav aria-label="Footer links">
+        <a href="{{ "/plugins/" | relURL }}">Plugin catalog</a>
+        <a href="{{ "/talks/" | relURL }}">Talks archive</a>
+        <a href="https://github.com/ambientelivre">GitHub</a>
+        <a href="{{ .Site.Params.contactURL }}">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  {{ $js := resources.Get "js/main.js" | js.Build (dict "target" "es2020" "minify" true) | fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+</body>
+</html>

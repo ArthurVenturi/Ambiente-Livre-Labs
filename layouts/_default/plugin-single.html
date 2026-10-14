@@ -1,0 +1,30 @@
+{{ define "main" }}
+<article class="prose plugin-single">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Params.description }}</p>
+  </header>
+  <dl class="detail-grid">
+    <dt>Software</dt><dd>{{ .Params.software }}</dd>
+    <dt>Categories</dt><dd>{{ delimit .Params.categories ", " }}</dd>
+    <dt>Language</dt><dd>{{ .Params.language }}</dd>
+    <dt>License</dt><dd>{{ .Params.license }}</dd>
+    <dt>Stars</dt><dd>{{ .Params.stars }}</dd>
+    <dt>Updated</dt><dd>{{ .Params.updatedAt }}</dd>
+  </dl>
+  {{ with .Params.purpose }}
+    <section><h2>Purpose</h2><p>{{ . }}</p></section>
+  {{ end }}
+  {{ with .Params.verifiedCapabilities }}
+    <section>
+      <h2>Verified capabilities</h2>
+      <ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+    </section>
+  {{ end }}
+  <div class="link-row">
+    <a href="{{ .Params.sourceRepo }}">Source repository</a>
+    {{ with .Params.documentationURL }}<a href="{{ . }}">Documentation</a>{{ end }}
+  </div>
+  {{ if .Params.classificationNeedsCuration }}<p class="warning">Classification pending curation review.</p>{{ end }}
+</article>
+{{ end }}

@@ -1,0 +1,20 @@
+{{ define "main" }}
+{{ $eventSlug := .Params.eventSlug }}
+{{ $talks := where (where .Site.RegularPages "Section" "talks") "Params.eventSlug" $eventSlug }}
+<section class="page-header">
+  <h1>{{ .Title }}</h1>
+  <p>{{ .Params.summary }}</p>
+</section>
+{{ if gt (len $talks) 0 }}
+  {{ range ($talks.GroupByParam "eventYear") }}
+    <section>
+      <h2>{{ if .Key }}{{ .Key }}{{ else }}Undated{{ end }}</h2>
+      <div class="cards-grid">
+        {{ range (sort .Pages "Date" "desc") }}{{ partial "talk-card.html" . }}{{ end }}
+      </div>
+    </section>
+  {{ end }}
+{{ else }}
+  <p>No talks have been curated for this event yet.</p>
+{{ end }}
+{{ end }}

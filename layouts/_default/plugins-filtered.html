@@ -1,0 +1,23 @@
+{{ define "main" }}
+{{ $plugins := (index .Site.Data "plugins-generated").items }}
+{{ $filterType := .Params.filterType }}
+{{ $filterValue := .Params.filterValue }}
+<section class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{ with .Params.description }}<p>{{ . }}</p>{{ end }}
+</section>
+<div class="cards-grid">
+  {{ $matches := slice }}
+  {{ range $plugins }}
+    {{ if and (eq $filterType "software") (eq .software $filterValue) }}
+      {{ $matches = $matches | append . }}
+      {{ partial "plugin-card.html" . }}
+    {{ end }}
+    {{ if and (eq $filterType "category") (in .categories $filterValue) }}
+      {{ $matches = $matches | append . }}
+      {{ partial "plugin-card.html" . }}
+    {{ end }}
+  {{ end }}
+</div>
+{{ if eq (len $matches) 0 }}<p>No plugins are currently published for this filter.</p>{{ end }}
+{{ end }}

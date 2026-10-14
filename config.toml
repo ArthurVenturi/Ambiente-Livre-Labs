@@ -1,0 +1,23 @@
+baseURL = "https://ambientelivre.github.io/labs/"
+languageCode = "en-us"
+title = "Ambiente Livre Labs"
+defaultContentLanguage = "en"
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 12
+
+[params]
+  description = "Plugin catalog and technical talks hub for Ambiente Livre Labs"
+  githubOrg = "ambientelivre"
+  contactURL = "https://www.ambientelivre.com.br/"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5

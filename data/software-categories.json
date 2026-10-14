@@ -1,0 +1,46 @@
+{
+  "software": {
+    "camunda": {
+      "title": "Camunda",
+      "description": "Workflow automation plugins and process execution extensions."
+    },
+    "alfresco": {
+      "title": "Alfresco",
+      "description": "Content services integrations and repository customizations."
+    },
+    "pentaho": {
+      "title": "Pentaho",
+      "description": "Business intelligence and analytics platform extensions."
+    },
+    "flowable": {
+      "title": "Flowable",
+      "description": "Workflow runtime customization and integration tooling."
+    }
+  },
+  "categories": {
+    "workflow-automation": {
+      "title": "Workflow Automation",
+      "description": "Plugins that automate processes, orchestrate tasks, and track execution."
+    },
+    "observability": {
+      "title": "Observability",
+      "description": "Tooling for execution visibility, logs, and process analytics."
+    },
+    "content-management": {
+      "title": "Content Management",
+      "description": "Extensions for ECM repositories, document workflows, and metadata models."
+    },
+    "migration": {
+      "title": "Migration",
+      "description": "Utilities for data, repository, and configuration migration."
+    },
+    "analytics-bi": {
+      "title": "Analytics & BI",
+      "description": "Plugins for dashboards, reports, and data analysis features."
+    },
+    "platform-distribution": {
+      "title": "Platform Distribution",
+      "description": "Maintained distributions and packaging for open software platforms."
+    }
+  }
+}

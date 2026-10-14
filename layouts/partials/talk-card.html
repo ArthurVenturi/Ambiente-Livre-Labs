@@ -1,0 +1,12 @@
+<article class="card reveal">
+  <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+  <p>{{ .Params.summary }}</p>
+  <ul class="meta-list">
+    <li><strong>Event:</strong> {{ .Params.event }}</li>
+    {{ with .Params.eventYear }}<li><strong>Year:</strong> {{ . }}</li>{{ end }}
+  </ul>
+  <div class="link-row">
+    <a href="{{ .RelPermalink }}">Talk page</a>
+    {{ with .Params.slidesURL }}<a href="{{ . }}">Slides</a>{{ end }}
+  </div>
+</article>

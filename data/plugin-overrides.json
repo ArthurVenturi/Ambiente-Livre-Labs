@@ -1,0 +1,75 @@
+{
+  "defaults": {
+    "includeByTopic": ["plugin", "alfresco-addon", "camunda", "integration"],
+    "excludeArchived": true
+  },
+  "repositories": {
+    "camunda-task-activity-plugin": {
+      "include": true,
+      "software": "camunda",
+      "categories": ["workflow-automation"],
+      "featured": true,
+      "purpose": "Adds advanced task activity tracking to Camunda workflows.",
+      "verifiedCapabilities": ["Task activity auditing", "Camunda task plugin hooks"],
+      "documentationURL": "https://github.com/ambientelivre/camunda-task-activity-plugin"
+    },
+    "camunda-task-history-plugin": {
+      "include": true,
+      "software": "camunda",
+      "categories": ["workflow-automation", "observability"],
+      "featured": true,
+      "purpose": "Collects and exposes workflow task history metadata for Camunda.",
+      "verifiedCapabilities": ["Task history capture", "Workflow analytics support"],
+      "documentationURL": "https://github.com/ambientelivre/camunda-task-history-plugin"
+    },
+    "alfresco-migrator": {
+      "include": true,
+      "software": "alfresco",
+      "categories": ["content-management", "migration"],
+      "featured": true,
+      "purpose": "Tooling for Alfresco content and metadata migration flows.",
+      "verifiedCapabilities": ["Repository migration routines", "Alfresco integration"],
+      "documentationURL": "https://github.com/ambientelivre/alfresco-migrator"
+    },
+    "custom-alfresco-content": {
+      "include": true,
+      "software": "alfresco",
+      "categories": ["content-management"],
+      "purpose": "Custom content extensions for Alfresco repositories.",
+      "verifiedCapabilities": ["Custom content model support"],
+      "documentationURL": "https://github.com/ambientelivre/custom-alfresco-content"
+    },
+    "waqr-plugin-pentaho": {
+      "include": true,
+      "software": "pentaho",
+      "categories": ["analytics-bi"],
+      "purpose": "Pentaho plugin workspace for WAQR reporting customizations.",
+      "verifiedCapabilities": ["Pentaho reporting plugin extension"]
+    },
+    "legacy-pentaho-ce": {
+      "include": true,
+      "software": "pentaho",
+      "categories": ["analytics-bi", "platform-distribution"],
+      "purpose": "Community-focused Pentaho CE distribution maintenance.",
+      "verifiedCapabilities": ["Pentaho CE packaging"],
+      "featured": true
+    },
+    "flowable-ambiente-livre-custom": {
+      "include": true,
+      "software": "flowable",
+      "categories": ["workflow-automation"],
+      "purpose": "Custom workflow extensions built for Flowable deployments.",
+      "verifiedCapabilities": ["Flowable integration"],
+      "classificationNeedsCuration": true
+    },
+    "samples-camunda": {
+      "include": false
+    },
+    "samples-pentaho": {
+      "include": false
+    },
+    "labs": {
+      "include": false
+    }
+  }
+}

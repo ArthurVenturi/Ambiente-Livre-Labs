@@ -1,0 +1,13 @@
+<article class="card reveal">
+  <h3><a href="{{ printf "/plugins/%s/" .slug | relURL }}">{{ .name }}</a></h3>
+  <p>{{ .description }}</p>
+  <ul class="meta-list">
+    <li><strong>Software:</strong> {{ .software }}</li>
+    <li><strong>Category:</strong> {{ delimit .categories ", " }}</li>
+    <li><strong>Language:</strong> {{ .language }}</li>
+  </ul>
+  <div class="link-row">
+    <a href="{{ .htmlUrl }}">Repository</a>
+    <a href="{{ printf "/plugins/%s/" .slug | relURL }}">Details</a>
+  </div>
+</article>

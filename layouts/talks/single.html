@@ -1,0 +1,27 @@
+{{ define "main" }}
+<article class="prose talk-single">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Params.summary }}</p>
+  </header>
+  <dl class="detail-grid">
+    <dt>Event</dt><dd><a href="{{ printf "/talks/events/%s/" .Params.eventSlug | relURL }}">{{ .Params.event }}</a></dd>
+    {{ with .Params.eventYear }}<dt>Edition</dt><dd>{{ . }}</dd>{{ end }}
+    {{ with .Params.location }}<dt>Location</dt><dd>{{ . }}</dd>{{ end }}
+    {{ with .Date }}<dt>Date</dt><dd>{{ .Format "2006-01-02" }}</dd>{{ end }}
+    {{ with .Params.speakers }}<dt>Speakers</dt><dd>{{ delimit . ", " }}</dd>{{ end }}
+  </dl>
+  {{ .Content }}
+
+  {{ if or .Params.slidesURL .Params.videoURL .Params.resources }}
+    <section>
+      <h2>Resources</h2>
+      <ul>
+        {{ with .Params.slidesURL }}<li><a href="{{ . }}">Slides</a></li>{{ end }}
+        {{ with .Params.videoURL }}<li><a href="{{ . }}">Recording</a></li>{{ end }}
+        {{ range .Params.resources }}<li><a href="{{ .url }}">{{ .label }}</a></li>{{ end }}
+      </ul>
+    </section>
+  {{ end }}
+</article>
+{{ end }}

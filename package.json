@@ -1,0 +1,11 @@
+{
+  "name": "ambiente-livre-labs-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync:github": "node scripts/sync-github.mjs",
+    "validate:catalog": "node scripts/validate-catalog.mjs",
+    "build": "hugo --gc --minify",
+    "dev": "hugo server -D"
+  }
+}

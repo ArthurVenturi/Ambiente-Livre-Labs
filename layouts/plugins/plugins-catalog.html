@@ -1,0 +1,63 @@
+{{ define "main" }}
+{{ $pluginData := index .Site.Data "plugins-generated" }}
+<section class="page-header">
+  <h1>{{ .Title }}</h1>
+  <p>{{ .Description }}</p>
+</section>
+
+<section class="filters" data-plugin-catalog>
+  <label>
+    Search
+    <input type="search" name="q" placeholder="Name, description, capability" data-filter="search">
+  </label>
+  <label>
+    Software
+    <select data-filter="software">
+      <option value="">All</option>
+      {{ range $key, $meta := (index .Site.Data "software-categories").software }}
+        <option value="{{ $key }}">{{ $meta.title }}</option>
+      {{ end }}
+    </select>
+  </label>
+  <label>
+    Category
+    <select data-filter="category">
+      <option value="">All</option>
+      {{ range $key, $meta := (index .Site.Data "software-categories").categories }}
+        <option value="{{ $key }}">{{ $meta.title }}</option>
+      {{ end }}
+    </select>
+  </label>
+  <label>
+    Sort
+    <select data-filter="sort">
+      <option value="name">Name</option>
+      <option value="updated">Recently updated</option>
+      <option value="stars">Most stars</option>
+    </select>
+  </label>
+  <button type="button" class="button secondary" data-action="reset">Reset filters</button>
+</section>
+
+<p class="result-count" data-result-count aria-live="polite"></p>
+<div class="cards-grid" data-results></div>
+<template data-result-template>
+  <article class="card reveal">
+    <h2><a data-field="detailsLink" href="#"><span data-field="name"></span></a></h2>
+    <p data-field="description"></p>
+    <ul class="meta-list">
+      <li><strong>Software:</strong> <span data-field="software"></span></li>
+      <li><strong>Categories:</strong> <span data-field="categories"></span></li>
+      <li><strong>Language:</strong> <span data-field="language"></span></li>
+      <li><strong>Stars:</strong> <span data-field="stars"></span></li>
+    </ul>
+    <div class="link-row">
+      <a data-field="repoLink" href="#">Repository</a>
+      <a data-field="detailsLinkSecondary" href="#">Details</a>
+    </div>
+  </article>
+</template>
+<p class="empty-state" data-empty hidden>No plugins match the current filters.</p>
+
+<script type="application/json" id="plugin-data">{{ $pluginData.items | jsonify }}</script>
+{{ end }}
